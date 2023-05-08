@@ -28,17 +28,23 @@ void bubble_sort(T arr[], int len) {
 				swap(arr[j], arr[j + 1]);
 }
 
-// 冒泡排序（改进版）
-void BubbleSort_orderly(vector<int>& v) {
-	int len = v.size();
-	bool orderly = false;
-	for (int i = 0; i < len - 1 && !orderly; ++i) {
-		orderly = true;
-		for (int j = 0; j < len - 1 - i; ++j) {
-			if (v[j] > v[j + 1]) {  // 从小到大
-				orderly = false;	// 发生交换则仍非有序
-				swap(v[j], v[j + 1]);
-			}
-		}
-	}
-}
+//Patrick's 冒泡改进版
+class Solution {
+public:
+    /*
+    改进之后的冒泡排序，就是加了一个，要是发现某一次都是顺序的，那就不继续下去排序了
+    */
+    vector<int> sortArray(vector<int>& nums) {
+        int len = nums.size();
+        bool orderly = false; //要是某一次都是顺序了，那就不用再继续了
+        for(int i = 0; i <  len - 1 && orderly == false; i++){
+            for(int j = 0; j < len - 1 - i; j++){ //注意边界条件 外层遍历了i之后，倒数的i个就是已经sort的了
+                if(nums[j] > nums[j + 1]){
+                    orderly = false;
+                    swap(nums[j], nums[j+1]);
+                }
+            }
+        }
+        return nums;
+    }
+};
