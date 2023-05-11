@@ -41,3 +41,52 @@ int main() {
 	cout << endl;
 	return 0;
 }
+
+
+// Patrick's Solution
+class Solution {
+public:
+    //调整堆
+    void max_heapify(vector<int>& nums, int start, int end){
+        //父节点和子节点index
+        int dad = start;
+        int son = dad * 2 + 1; //两个子节点分别是 dad*2+1 和 dad*2+2
+
+        while(son <= end){
+            if(son + 1 <= end && nums[son] < nums[son + 1]){
+                son++; //找到两个son里比较大的那个
+            }
+            if(nums[dad] > nums[son]){
+                return; //这里调整堆的话，son默认是比son的son大的，所以要是dad>son的话，其实可以直接return了
+            }
+            else{
+                //深入去调整
+                swap(nums[dad], nums[son]);
+                dad = son;
+                son = dad * 2 + 1;
+            }
+        }
+    }
+
+    void heap_sort(vector<int>& nums, int len){
+
+        //初始化建立大根堆，从最后一个父节点开始调整
+        //最后一个父节点是len/2 - 1
+        for(int i = len / 2 - 1; i >= 0; i--){
+            max_heapify(nums, i, len-1);
+        }
+
+        //调整
+        //不断把根节点和最后一个交换，然后调整前面的；这样一个大根堆出来的是一个递增的排序
+        for(int i = len -1; i > 0; i--){
+            swap(nums[i], nums[0]); //提取root与最后一个交换
+            max_heapify(nums, 0, i-1); //调整前面的
+        }
+    }
+
+    vector<int> sortArray(vector<int>& nums) {
+        int len = nums.size();
+        heap_sort(nums, len);
+        return nums;
+    }
+};
