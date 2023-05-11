@@ -37,3 +37,19 @@ void Selection_Sort(std::vector<T>& arr) {
 			std::swap(arr[i], arr[min]);
 	}
 }
+
+// Patrick的实现
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        int len = nums.size();
+        for(int i = 0; i < len - 1; i++){
+            int min = i;
+            for(int j = i; j < len; j++){
+                if(nums[min] > nums[j]) min = j;
+            }
+            if(min != i) swap(nums[i], nums[min]);
+        }
+        return nums;
+    }
+};
